@@ -21,7 +21,7 @@ A data-driven comparison of an **OVB Allfinanz (Romania)** investment proposal â
 | [`FINDINGS.md`](FINDINGS.md) | The full report |
 | `offer/index.html` | The original (AI-generated) proposal page, archived; personal data removed |
 | `signal iduna performance/*.har` | Captured daily fund NAV data (SIGNAL IDUNA API) |
-| `signal iduna performance/signal iduna prospects/*.pdf` | The 8 fund PRIIP KIDs |
+| `signal iduna performance/signal iduna prospects/*.pdf` | The 8 fund PRIIP KIDs + the product KID (authoritative cost/scenario doc) |
 
 ## Sources
 
