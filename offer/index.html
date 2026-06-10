@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Proposal — Client</title>
+<style>
+  :root{
+    --ink:#0E1B2A;        /* deep navy ink */
+    --ink-soft:#2A3A4D;
+    --paper:#F7F5F0;      /* warm paper */
+    --paper-2:#FFFFFF;
+    --line:#D9D3C7;       /* hairline */
+    --brass:#B08433;      /* OVB-adjacent warm gold */
+    --brass-soft:#E9DEC4;
+    --teal:#1F6F6B;       /* trust / growth */
+    --teal-soft:#D6E7E5;
+    --rust:#A6492E;       /* caution / tax drag */
+    --rust-soft:#F0DBD2;
+    --slate:#5A6675;
+    --good:#1F6F6B;
+    --bad:#A6492E;
+    --shadow:0 1px 2px rgba(14,27,42,.05),0 8px 24px rgba(14,27,42,.06);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,"Times New Roman",serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  h1,h2,h3,h4{font-family:"Helvetica Neue",Inter,Arial,sans-serif;line-height:1.15;letter-spacing:-.01em;}
+  .eyebrow{
+    font-family:"Helvetica Neue",Inter,Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.22em;font-size:11.5px;font-weight:700;
+    color:var(--brass);
+  }
+  a{color:var(--teal);}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    background:
+      radial-gradient(1200px 400px at 78% -10%, rgba(176,132,51,.16), transparent 60%),
+      linear-gradient(180deg,#0E1B2A 0%, #14263B 100%);
+    color:#F2EFE8;
+    padding:54px 0 46px;
+  }
+  .hero .wrap{display:block;}
+  .hero .topline{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;
+    border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:22px;margin-bottom:30px;flex-wrap:wrap;
+  }
+  .brandmark{font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  .brandmark .ovb{font-weight:800;letter-spacing:.16em;font-size:18px;color:#fff;}
+  .brandmark .sub{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#B9C2CE;margin-top:4px;}
+  .doc-meta{text-align:right;font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:12.5px;color:#B9C2CE;}
+  .doc-meta strong{color:#F2EFE8;font-weight:600;}
+  .hero h1{
+    font-size:clamp(32px,5vw,52px);font-weight:800;color:#fff;margin:.1em 0 .25em;max-width:18ch;
+  }
+  .hero .lede{font-size:18.5px;color:#CBD3DD;max-width:60ch;margin:0;}
+  .hero .client-strip{
+    display:flex;gap:34px;flex-wrap:wrap;margin-top:34px;
+    font-family:"Helvetica Neue",Inter,Arial,sans-serif;
+  }
+  .client-strip .item{min-width:120px;}
+  .client-strip .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8C97A6;}
+  .client-strip .val{font-size:16px;color:#fff;font-weight:600;margin-top:3px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:54px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
+  .sec-num{
+    font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-weight:800;font-size:13px;
+    color:var(--brass);border:1.5px solid var(--brass-soft);border-radius:50%;
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;margin:.1em 0 .35em;}
+  h3{font-size:20px;font-weight:700;margin:1.6em 0 .4em;color:var(--ink);}
+  p{margin:.7em 0;}
+  .muted{color:var(--slate);}
+  .small{font-size:14.5px;}
+
+  /* pull quote / acknowledgement */
+  .ack{
+    background:linear-gradient(180deg,#fff, #FBF9F4);
+    border:1px solid var(--line);border-left:4px solid var(--teal);
+    border-radius:12px;padding:24px 26px;box-shadow:var(--shadow);margin:8px 0 4px;
+  }
+  .ack h3{margin-top:0;}
+
+  /* current portfolio card */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr;}}
+  .card{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;box-shadow:var(--shadow);
+  }
+  .card h4{font-size:16px;margin:0 0 10px;font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  .stat{font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  .stat .big{font-size:30px;font-weight:800;color:var(--ink);line-height:1;}
+  .stat .cap{font-size:12px;letter-spacing:.04em;color:var(--slate);text-transform:uppercase;margin-top:6px;}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;font-family:"Helvetica Neue",Inter,Arial,sans-serif;
+    font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid;
+  }
+  .badge.good{color:var(--good);border-color:var(--teal-soft);background:var(--teal-soft);}
+  .badge.warn{color:var(--rust);border-color:var(--rust-soft);background:var(--rust-soft);}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+
+  /* allocation bar */
+  .alloc{margin:18px 0 4px;}
+  .alloc .track{display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--line);font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:12px;}
+  .alloc .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;}
+  .alloc .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:13px;font-family:"Helvetica Neue",Inter,Arial,sans-serif;color:var(--slate);}
+  .alloc .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+  /* the split concept */
+  .split{
+    display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin:26px 0 6px;
+  }
+  @media(max-width:780px){.split{grid-template-columns:1fr;}}
+  .split .leg{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;box-shadow:var(--shadow);
+  }
+  .split .leg.keep{border-top:4px solid var(--slate);}
+  .split .leg.add{border-top:4px solid var(--brass);}
+  .split .arrow{display:flex;align-items:center;justify-content:center;padding:0 16px;color:var(--brass);font-size:28px;font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  @media(max-width:780px){.split .arrow{padding:8px;transform:rotate(90deg);}}
+  .split .leg .amt{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:26px;font-weight:800;}
+  .split .leg .role{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;}
+  .split ul{margin:12px 0 0;padding-left:18px;font-size:14.5px;}
+  .split ul li{margin:5px 0;}
+
+  /* benefit pills */
+  .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px;}
+  @media(max-width:780px){.benefits{grid-template-columns:1fr;}}
+  .benefit{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);}
+  .benefit .ico{font-size:22px;}
+  .benefit h4{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:16px;margin:10px 0 6px;}
+  .benefit p{font-size:14px;margin:0;color:var(--ink-soft);}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:14px;margin:14px 0;}
+  table.funds td,table.funds th{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  table th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);font-weight:700;}
+  table.funds tr:hover td{background:#FBF9F4;}
+  .fname{font-weight:700;color:var(--ink);}
+  .ter{font-variant-numeric:tabular-nums;font-weight:600;}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:6px;text-transform:uppercase;}
+  .tag.us{background:#E7EEF6;color:#234e7d;}
+  .tag.gl{background:var(--teal-soft);color:var(--teal);}
+  .tag.eu{background:#F2E8D6;color:#7a5a13;}
+  .tag.mix{background:#EDE7DD;color:#6a5a3e;}
+  .tag.bond{background:#ECECEC;color:#555;}
+
+  /* variant cards */
+  .variant{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);height:100%;}
+  .variant .vtag{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;}
+  .variant.us .vtag{color:#234e7d;}
+  .variant.gl .vtag{color:var(--teal);}
+  .variant.eu .vtag{color:#7a5a13;}
+  .variant h4{font-size:19px;margin:6px 0 8px;}
+  .variant p{font-size:14.5px;margin:.4em 0;}
+  .variant .mix-list{font-size:13.5px;color:var(--ink-soft);font-family:"Helvetica Neue",Inter,Arial,sans-serif;margin-top:12px;}
+  .variant .mix-list b{color:var(--ink);}
+
+  .freebadge{
+    display:flex;align-items:center;gap:14px;background:var(--teal-soft);border:1px solid #BFD8D5;
+    border-radius:14px;padding:18px 22px;margin-top:24px;
+  }
+  .freebadge .ico{font-size:26px;}
+  .freebadge p{margin:0;font-size:15px;color:#13413E;}
+  .freebadge strong{color:#0d2e2c;}
+
+  /* calculator */
+  .calc-controls{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  .calc-controls .fld{flex:1;min-width:180px;}
+  .calc-controls label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:700;margin-bottom:8px;}
+  .calc-controls input[type=range]{width:100%;accent-color:var(--brass);}
+  .calc-controls .rngval{font-size:22px;font-weight:800;color:var(--ink);}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  .kpi .v{font-size:24px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .kpi .l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-top:4px;}
+  .kpi.accent .v{color:var(--brass);}
+  .chart-box{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);}
+  .chart-legend{display:flex;gap:22px;flex-wrap:wrap;font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:13px;color:var(--slate);margin-bottom:6px;}
+  .chart-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle;}
+
+  /* tax vs cost */
+  .crossover{background:linear-gradient(180deg,#fff,#FBF9F4);border:1px solid var(--line);border-radius:14px;padding:6px 22px 8px;box-shadow:var(--shadow);}
+  table.tax{font-size:13px;}
+  table.tax td,table.tax th{padding:8px 9px;border-bottom:1px solid #ECE7DB;text-align:right;font-variant-numeric:tabular-nums;}
+  table.tax th{text-align:right;}
+  table.tax td:first-child,table.tax th:first-child{text-align:left;}
+  table.tax tr.flip td{background:var(--brass-soft);font-weight:700;}
+  .pos{color:var(--good);font-weight:600;}
+  .neg{color:var(--bad);font-weight:600;}
+  .note{font-size:13px;color:var(--slate);background:#fff;border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin-top:14px;}
+
+  /* footer */
+  footer{background:#0E1B2A;color:#C7CFD9;padding:40px 0;font-family:"Helvetica Neue",Inter,Arial,sans-serif;}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+  footer .who strong{color:#fff;font-size:16px;}
+  footer .who .role{font-size:13px;color:#9AA6B4;margin-top:3px;}
+  footer .disc{font-size:11.5px;color:#7E8B99;max-width:52ch;line-height:1.6;}
+
+  ul.clean{list-style:none;padding:0;margin:10px 0;}
+  ul.clean li{padding-left:24px;position:relative;margin:8px 0;}
+  ul.clean li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--brass);}
+  .ref{font-size:12.5px;color:var(--slate);}
+
+  /* RIY headline */
+  .riy{
+    display:flex;align-items:center;gap:26px;flex-wrap:wrap;
+    background:linear-gradient(135deg,#0E1B2A,#14263B);color:#F2EFE8;
+    border-radius:16px;padding:26px 30px;margin:6px 0 4px;box-shadow:var(--shadow);
+  }
+  .riy .num{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:54px;font-weight:800;color:#E6C77A;line-height:1;}
+  .riy .txt{flex:1;min-width:240px;}
+  .riy .txt h4{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:17px;margin:0 0 6px;color:#fff;}
+  .riy .txt p{margin:0;font-size:14.5px;color:#C7CFD9;}
+  /* how-cost-works mini cards */
+  .costflow{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:18px 0;}
+  @media(max-width:780px){.costflow{grid-template-columns:1fr;}}
+  .costflow .cc{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);}
+  .costflow .cc h4{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-size:15px;margin:0 0 6px;}
+  .costflow .cc p{margin:0;font-size:14px;color:var(--ink-soft);}
+  .costflow .cc .pct{font-family:"Helvetica Neue",Inter,Arial,sans-serif;font-weight:800;color:var(--brass);}
+  table.cost td,table.cost th{padding:9px 11px;border-bottom:1px solid #ECE7DB;text-align:right;font-variant-numeric:tabular-nums;}
+  table.cost th{text-align:right;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);}
+  table.cost td:first-child,table.cost th:first-child{text-align:left;}
+  table.cost tr.y1 td{background:var(--rust-soft);}
+  table.cost tr.y20 td{background:var(--brass-soft);font-weight:700;}
+  .costbar{display:inline-block;height:9px;border-radius:4px;background:var(--brass);vertical-align:middle;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topline">
+      <div class="brandmark">
+        <div class="ovb">OVB ALLFINANZ</div>
+        <div class="sub">Romania · Wealth Advisory</div>
+      </div>
+      <div class="doc-meta">
+        Personalised Investment Proposal<br>
+        Prepared <strong>9 June 2026</strong> · Review <strong>10 June 2026, 19:00</strong><br>
+        Confidential — for the named client only
+      </div>
+    </div>
+
+    <div class="eyebrow">Building on a strong foundation</div>
+    <h1>A complementary engine for your million-euro goal</h1>
+    <p class="lede">You have already done the hard part: a globally diversified core, funded month after month. This proposal is not about replacing it — it is about adding a second, inheritable, tax-sheltered layer that diversifies what you hold and protects what you build.</p>
+
+    <div class="client-strip">
+      <div class="item"><div class="lbl">Client</div><div class="val">Client</div></div>
+      <div class="item"><div class="lbl">Born</div><div class="val"></div></div>
+      <div class="item"><div class="lbl">Profession</div><div class="val">IT</div></div>
+      <div class="item"><div class="lbl">Horizon</div><div class="val">15–30 years</div></div>
+      <div class="item"><div class="lbl">Target</div><div class="val">€1,000,000</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- 1. ACKNOWLEDGEMENT -->
+<section id="recognition">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">1</div><div><div class="eyebrow">Where you stand today</div><h2>You are already doing this right</h2></div></div>
+
+    <div class="ack">
+      <h3>A foundation most investors never reach</h3>
+      <p>Your main savings vehicle is <strong>VWCE</strong> — Vanguard's FTSE All-World ETF, roughly 3,700 companies across developed and emerging markets — held for five years and funded with <strong>€2,000 per month</strong>. At a 0.19% total expense ratio it is about as cheap and as broad as a single fund can be, and the regular monthly contribution means you are dollar-cost-averaging through every market mood instead of trying to time it.</p>
+      <p style="margin-bottom:0">That combination — broad diversification, low cost, consistent automatic investing, a 10-year-plus mindset — neutralises the most common and most expensive investor mistakes. So the question in front of us is not <em>"is your strategy wrong?"</em> It clearly isn't. The question is <em>"what can sit alongside it to diversify, protect, and add advantages your current setup cannot offer?"</em></p>
+    </div>
+
+    <div class="grid3" style="margin-top:24px">
+      <div class="card"><div class="stat"><div class="big">€2,000</div><div class="cap">Saved every month</div></div></div>
+      <div class="card"><div class="stat"><div class="big">5 yrs</div><div class="cap">Already invested in VWCE</div></div></div>
+      <div class="card"><div class="stat"><div class="big">~€900k</div><div class="cap">Still to build toward the €1M goal</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PORTFOLIO REVIEW -->
+<section id="review">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">2</div><div><div class="eyebrow">An honest read of the portfolio</div><h2>Global on the label, American under the hood</h2></div></div>
+
+    <p>VWCE is genuinely global, but it is <em>market-cap weighted</em> — every company is held in proportion to its size. Because U.S. companies are by far the largest in the world today, the fund's weight follows them. The practical result is that a "global" all-world position is currently around <strong>63% United States</strong>, with a heavy tilt toward a handful of mega-cap technology names.</p>
+
+    <div class="alloc">
+      <div class="track">
+        <div class="seg" style="width:63%;background:#234e7d">USA ~63%</div>
+        <div class="seg" style="width:16%;background:#1F6F6B">Dev. Europe ~16%</div>
+        <div class="seg" style="width:11%;background:#B08433">Asia-Pac ~11%</div>
+        <div class="seg" style="width:10%;background:#5A6675">EM ~10%</div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#234e7d"></i>United States</span>
+        <span><i style="background:#1F6F6B"></i>Developed Europe</span>
+        <span><i style="background:#B08433"></i>Asia-Pacific</span>
+        <span><i style="background:#5A6675"></i>Emerging markets</span>
+      </div>
+      <p class="small muted">Approximate FTSE All-World regional weights — illustrative, they drift with the market.</p>
+    </div>
+
+    <p>This is not a flaw — it is simply a <strong>concentration you should hold on purpose, not by accident</strong>. Over the last five years that U.S. tilt has paid off handsomely. But you told us clearly: security matters most, you accept roughly 40% risk and no more, and you want to diversify "as much as possible." Two reasonable observations follow:</p>
+
+    <ul class="clean">
+      <li><strong>You are heavily exposed to one country and one style.</strong> If the next decade favours Europe, emerging markets, value, or smaller companies, an all-world fund captures only a slice of it.</li>
+      <li><strong>Adding more of the same is not diversification.</strong> Buying a standalone S&amp;P 500 fund next to VWCE would simply <em>increase</em> the American and tech weight you already carry — it raises concentration, it does not lower it.</li>
+    </ul>
+
+    <p>So a good complement does one of two things: it <strong>tilts the geography or style</strong> away from where you are already heavy, or it <strong>adds advantages the brokerage account structurally cannot give you</strong> — inheritance, guarantee, and tax treatment. The proposal below does both.</p>
+  </div>
+</section>
+
+<!-- 3. THE PROPOSAL -->
+<section id="proposal">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">3</div><div><div class="eyebrow">The core idea</div><h2>Keep the engine. Add a second one.</h2></div></div>
+
+    <p>We do not touch what works. Your existing €2,000/month is simply <strong>split into two complementary streams</strong> — the low-cost core you already trust stays exactly where it is, and an equal amount funds a vehicle that adds diversification and three structural advantages.</p>
+
+    <div class="split">
+      <div class="leg keep">
+        <div class="role">Keep — the core</div>
+        <div class="amt">€1,000<span style="font-size:14px;font-weight:600;color:var(--slate)"> / month</span></div>
+        <h4 style="font-family:'Helvetica Neue',Inter,Arial,sans-serif;margin:14px 0 0">VWCE via Interactive Brokers</h4>
+        <ul>
+          <li>Lowest possible cost (0.19% TER)</li>
+          <li>Full transparency, physical replication</li>
+          <li>Stays exactly as it is — proven, working</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="leg add">
+        <div class="role">Add — the complement</div>
+        <div class="amt">€1,000<span style="font-size:14px;font-weight:600;color:var(--slate)"> / month</span></div>
+        <h4 style="font-family:'Helvetica Neue',Inter,Arial,sans-serif;margin:14px 0 0">SIGNAL IDUNA 101 Invest</h4>
+        <ul>
+          <li>Diversifies geography &amp; style vs. VWCE</li>
+          <li>Inheritable, guaranteed, tax-sheltered</li>
+          <li>Switch funds anytime — free, unlimited</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Why the 101 Invest, specifically</h3>
+    <p>It is a unit-linked life-insurance contract with an investment component, denominated in <strong>euro</strong>, distributed in Romania by SIGNAL IDUNA. The investment menu is run by <strong>HANSAINVEST</strong> (part of the SIGNAL IDUNA group since 1969, ~€65bn in assets) and by <strong>SIGNAL IDUNA Fund Invest</strong> (the group's Hungarian manager). It is not meant to beat your ETF on raw cost — it is meant to give you things the brokerage account cannot:</p>
+
+    <div class="benefits">
+      <div class="benefit">
+        <div class="ico">🕊️</div>
+        <h4>Inheritability</h4>
+        <p>As a life-insurance contract, the value passes directly to a named beneficiary — outside the usual probate process. You listed "can be inherited" as one of your top-three priorities; the brokerage account does not offer this cleanly.</p>
+      </div>
+      <div class="benefit">
+        <div class="ico">🛡️</div>
+        <h4>FGA guarantee</h4>
+        <p>Covered by Romania's policyholder guarantee fund (FGA). The current ceiling is <strong>500,000 RON per contract</strong> — roughly <strong>€100,000</strong>, though it is set in lei and moves with the exchange rate. This sits on top of the regulated insurer framework.</p>
+      </div>
+      <div class="benefit">
+        <div class="ico">🌿</div>
+        <h4>Tax shelter</h4>
+        <p>Under the Romanian Fiscal Code, gains inside the insurance contract are not hit by the 16% capital-gains tax that applies to a DIY brokerage exit. Over a long horizon this <em>cushions</em> the product's higher running cost — more on this below.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>For context on your current account.</strong> Investing via Interactive Brokers as a Romanian resident runs through <strong>Interactive Brokers Ireland (IBIE)</strong>. Investor protection there is the Irish Investor Compensation Scheme at <strong>€20,000</strong>, with underlying SIPC protection of up to <strong>$500,000</strong> where positions are custodied at IB LLC. On gains you currently owe <strong>16% capital-gains tax plus the CASS health contribution</strong> on exit — and, given European fiscal trends, the long-run direction of such taxes is more likely up than down.
+    </div>
+  </div>
+</section>
+
+<!-- 4. THE FUND MENU -->
+<section id="funds">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">4</div><div><div class="eyebrow">What you can actually hold inside it</div><h2>The eight funds on the 101 Invest menu</h2></div></div>
+
+    <p>Every fund below is available inside the euro 101 Invest contract. The right mix depends on the tilt you want — and crucially, you can <strong>move between any of them at any time, for free, with no limit</strong>.</p>
+
+    <table class="funds">
+      <thead>
+        <tr><th style="width:32%">Fund</th><th>What it invests in</th><th style="width:18%">Style / region</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fname">SIFI USA Equity Fund of Funds</td>
+          <td>U.S. equity exposure built through underlying funds/ETFs — the menu's most American-focused option.</td>
+          <td><span class="tag us">USA equity</span></td>
+        </tr>
+        <tr>
+          <td class="fname">NB Aktien Global R</td>
+          <td>Actively managed global equity — a worldwide stock selection, broad rather than country-specific.</td>
+          <td><span class="tag gl">Global equity</span></td>
+        </tr>
+        <tr>
+          <td class="fname">SI BestSelect Class A</td>
+          <td>Actively managed fund-of-funds; a diversified multi-manager global mix across asset classes.</td>
+          <td><span class="tag gl">Global mix</span></td>
+        </tr>
+        <tr>
+          <td class="fname">NB Aktien Europa R</td>
+          <td>Actively managed European equity — benchmark-independent, tilted to financials &amp; industrials, lighter on tech.</td>
+          <td><span class="tag eu">Europe equity</span></td>
+        </tr>
+        <tr>
+          <td class="fname">HANSAsmart Select E (Class-A)</td>
+          <td>Actively managed, equity-heavy balanced fund with a large-cap value lean.</td>
+          <td><span class="tag mix">Equity-tilted</span></td>
+        </tr>
+        <tr>
+          <td class="fname">HANSAdynamic Class A</td>
+          <td>Dynamic mixed fund (equity + bonds), positioned for moderate-to-higher growth.</td>
+          <td><span class="tag mix">Dynamic mixed</span></td>
+        </tr>
+        <tr>
+          <td class="fname">HANSAcentro</td>
+          <td>Actively managed balanced fund (equity + bonds), moderate risk (SRRI 4/7).</td>
+          <td><span class="tag mix">Balanced</span></td>
+        </tr>
+        <tr>
+          <td class="fname">TBF Global Income EUR R</td>
+          <td>Global income-oriented fund — a more conservative, yield-focused euro profile.</td>
+          <td><span class="tag bond">Income / conservative</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="ref">You choose any single fund or blend, and switch freely between them. The cost of the contract is the same whichever funds you hold — it is set by the product structure, not the fund choice, and is laid out in full in section 6 below.</p>
+  </div>
+</section>
+
+<!-- 5. THREE VARIANTS -->
+<section id="variants">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">5</div><div><div class="eyebrow">Three ways to point the second engine</div><h2>Pick a tilt — and change your mind whenever you like</h2></div></div>
+
+    <p>Because switching is free and unlimited, the starting choice is low-stakes. Here are three coherent directions, each defined by what it does <em>relative to the VWCE you already hold</em>.</p>
+
+    <div class="grid3" style="margin-top:8px">
+      <div class="variant us">
+        <div class="vtag">Variant A · Lean into America</div>
+        <h4>Increase the U.S. weight</h4>
+        <p>If you believe U.S. mega-caps keep leading, this deliberately raises your American exposure on top of VWCE's ~63%.</p>
+        <p class="muted small">Trade-off: highest concentration, highest dependence on one market. This <em>amplifies</em> rather than diversifies.</p>
+        <div class="mix-list"><b>Suggested core:</b> SIFI USA Equity Fund of Funds, optionally a slice of NB Aktien Global for ballast.</div>
+      </div>
+      <div class="variant gl">
+        <div class="vtag">Variant B · Stay the course, globally</div>
+        <h4>Mirror your global strategy</h4>
+        <p>If you simply want "more of the same philosophy" — broad, worldwide, diversified — this keeps the global character you already like, now inside a tax-sheltered, inheritable wrapper.</p>
+        <p class="muted small">Best fit for your stated preference: "if it's something global, that's perfect."</p>
+        <div class="mix-list"><b>Suggested core:</b> NB Aktien Global R, optionally blended with SI BestSelect for multi-manager breadth.</div>
+      </div>
+      <div class="variant eu">
+        <div class="vtag">Variant C · Rebalance toward Europe</div>
+        <h4>Increase the European weight</h4>
+        <p>The genuine diversifier. VWCE holds only ~16–20% Europe; this adds a real European overweight, with more financials and industrials and less tech — a different return driver.</p>
+        <p class="muted small">Strongest diversification benefit; accepts active-management cost for a true geographic tilt.</p>
+        <div class="mix-list"><b>Suggested core:</b> NB Aktien Europa R, optionally with HANSAcentro for a balanced cushion.</div>
+      </div>
+    </div>
+
+    <div class="freebadge">
+      <div class="ico">🔄</div>
+      <p><strong>Switching is completely free and unlimited.</strong> You can start in one direction and rotate the entire balance into another whenever your view changes — no transaction fee, no tax event inside the contract, no limit on how often. The only transaction cost in the structure is a <strong>€5 fee on withdrawal</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. WHAT IT ACTUALLY COSTS -->
+<section id="cost">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">6</div><div><div class="eyebrow">The number you asked for — exactly</div><h2>What the contract actually costs</h2></div></div>
+
+    <p>You asked to see the fees precisely, not as a vague range. So instead of quoting an estimated charge per fund, here is the <strong>real cost of the 101 Invest itself</strong>, built from the product's own fee structure. The key thing to understand is <em>where</em> the costs are taken — because that is what makes them shrink over time.</p>
+
+    <div class="costflow">
+      <div class="cc">
+        <h4>Most costs come out of the contribution</h4>
+        <p>A set of charges — a <span class="pct">0.80%</span> premium fee, a <span class="pct">3.00%</span> management charge, and a sliding <span class="pct">2.5–5%</span> reference fee — are deducted from each <strong>€12,000 annual payment</strong> before it is invested, plus small fixed amounts (€6.40 once at the start, €3.70 per year).</p>
+      </div>
+      <div class="cc">
+        <h4>Only one charge touches the whole pot</h4>
+        <p>A single <span class="pct">0.30%</span> annual fee applies to the <strong>total account value</strong> at year-end. Everything else is tied to the fixed yearly contribution — so as the account grows, those charges become a smaller and smaller slice of what you hold.</p>
+      </div>
+    </div>
+
+    <p>That is the mechanism behind the phrase "the cost decreases over time." The fees themselves do not fall — but because they are mostly charged on a <strong>fixed €12,000/year</strong> while your balance compounds, their weight against the whole portfolio drops every single year. The reference fee even steps down as the account passes each threshold (€2k, €3.5k, €5k, €10k, €30k), settling at its lowest 2.5% band early on.</p>
+
+    <table class="cost">
+      <thead>
+        <tr><th>Year</th><th>Account value</th><th>Annual cost (€)</th><th>Cost as % of account value</th></tr>
+      </thead>
+      <tbody>
+        <tr class="y1"><td>1</td><td>€11,991</td><td>€1,102</td><td>18.38% &nbsp;<span class="costbar" style="width:120px"></span></td></tr>
+        <tr><td>2</td><td>€25,412</td><td>€896</td><td>4.79% &nbsp;<span class="costbar" style="width:31px"></span></td></tr>
+        <tr><td>3</td><td>€40,131</td><td>€940</td><td>2.87% &nbsp;<span class="costbar" style="width:19px"></span></td></tr>
+        <tr><td>5</td><td>€74,114</td><td>€983</td><td>1.51% &nbsp;<span class="costbar" style="width:10px"></span></td></tr>
+        <tr><td>10</td><td>€192,348</td><td>€1,338</td><td>0.75% &nbsp;<span class="costbar" style="width:5px"></span></td></tr>
+        <tr><td>15</td><td>€379,926</td><td>€1,903</td><td>0.53% &nbsp;<span class="costbar" style="width:4px"></span></td></tr>
+        <tr class="y20"><td>20</td><td>€677,517</td><td>€2,798</td><td>0.44% &nbsp;<span class="costbar" style="width:3px;background:#7a5a13"></span></td></tr>
+      </tbody>
+    </table>
+    <p class="ref">The first year looks steep (18%) for one reason only: the fixed charges fall on a near-empty account. From year two onward the same charges land on a much larger balance, so the percentage drops sharply and keeps falling. By year 10 the contract costs under 0.75% of what you hold each year, and around 0.44% by year 20.</p>
+
+    <div class="riy">
+      <div class="num">0.90%</div>
+      <div class="txt">
+        <h4>Reduction in yield over 20 years</h4>
+        <p>Averaged across the full 20-year horizon, all costs combined reduce the return by about <strong>0.90% per year</strong> — turning a 10% gross return into roughly <strong>9.1% net</strong>. That is the single, honest "all-in" figure for the contract, and for a guaranteed, inheritable, tax-sheltered euro product it is competitive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CALCULATOR -->
+<section id="calculator">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">7</div><div><div class="eyebrow">The €1,000/month complement, projected</div><h2>What the second engine could build</h2></div></div>
+
+    <p>This models the new <strong>€1,000/month (€12,000/year)</strong> stream going into the 101 Invest at a <strong>10% gross annual return</strong>, net of the product's costs — exactly the basis used in the calculation prepared for you. Drag the slider to see any horizon up to 20 years.</p>
+
+    <div class="calc-controls">
+      <div class="fld">
+        <label>Investment horizon</label>
+        <input type="range" id="yrs" min="1" max="20" value="20" step="1">
+        <div><span class="rngval" id="yrsval">20</span> <span style="font-size:13px;color:var(--slate)">years</span></div>
+      </div>
+      <div class="fld">
+        <label>Monthly contribution</label>
+        <div class="rngval">€1,000</div>
+        <div style="font-size:13px;color:var(--slate)">€12,000 / year — fixed for this projection</div>
+      </div>
+      <div class="fld">
+        <label>Gross return assumption</label>
+        <div class="rngval">10%</div>
+        <div style="font-size:13px;color:var(--slate)">net of product cost in the figures shown</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v" id="kpi-paid">—</div><div class="l">Total paid in</div></div>
+      <div class="kpi accent"><div class="v" id="kpi-value">—</div><div class="l">Projected value</div></div>
+      <div class="kpi"><div class="v" id="kpi-gain">—</div><div class="l">Total gain</div></div>
+      <div class="kpi"><div class="v" id="kpi-acc">—</div><div class="l">Accessible value</div></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-legend">
+        <span><i style="background:#B9C6D6"></i>Total paid in</span>
+        <span><i style="background:#3E6FA0"></i>Account value (after cost)</span>
+        <span><i style="background:#1F6F6B"></i>Accessible value</span>
+      </div>
+      <svg id="chart" viewBox="0 0 920 380" width="100%" role="img" aria-label="Projected growth of the 101 Invest complement"></svg>
+    </div>
+    <p class="ref">Figures from the prepared calculation (€12,000/year, 10% gross). "Accessible value" reflects the contract's surrender value, which rises over time as front-loaded costs taper — by years 11–12 it effectively matches the account value. Projections are illustrative, not guaranteed; actual returns vary and can be negative.</p>
+  </div>
+</section>
+
+<!-- 7. TAX VS COST -->
+<section id="taxcost">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">8</div><div><div class="eyebrow">A cushion, not the headline</div><h2>How the tax shelter softens the cost</h2></div></div>
+
+    <p>Be clear-eyed: the 101 Invest <em>does</em> cost more to run than a 0.19% ETF — about <strong>0.90% per year</strong> averaged over 20 years, as section 6 showed. The point of this section is not to pretend otherwise — it is to show that, on a long horizon, the <strong>16% capital-gains tax you avoid inside the contract gradually offsets that higher cost</strong>, so the real net gap is far smaller than the raw fee difference suggests. The headline reasons to add this product remain inheritance, guarantee and diversification; the tax shelter is the cushion underneath.</p>
+
+    <p>The table compares the same €12,000/year at 10% on a <strong>gain-for-gain basis</strong>: the 101 Invest's gain (after its costs) versus a 0.19% DIY ETF's gain <em>after</em> the 16% capital-gains tax is taken on exit. Early on the cheap ETF is ahead — but the "Δ vs. product" column shows that advantage shrinking every year, then flipping in the product's favour.</p>
+
+    <div class="crossover">
+      <table class="tax">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Paid in</th>
+            <th>101 Invest gain<br>(after cost)</th>
+            <th>DIY ETF gain<br>after 16% tax</th>
+            <th>Δ vs. product</th>
+          </tr>
+        </thead>
+        <tbody id="taxbody"></tbody>
+      </table>
+    </div>
+    <p class="ref">Source: the prepared "Cost vs. tax" calculation, €12,000/year at 10% gross. The DIY column applies 16% capital-gains tax to the gain; the CASS health contribution would widen the gap further in the product's favour. The crossover lands around <strong>year 11</strong> — from there the tax-sheltered contract pulls ahead and stays ahead, and any future rise in capital-gains tax only brings that point forward.</p>
+
+    <div class="ack" style="border-left-color:var(--brass);margin-top:24px">
+      <h3 style="margin-top:0">The net picture for you</h3>
+      <p style="margin-bottom:0">You keep your low-cost global core untouched. Alongside it, the second €1,000/month buys real diversification, an inheritable structure, an FGA guarantee, and a tax shelter that — over your 15–30 year horizon — largely neutralises the extra cost. The result is a portfolio that does more than chase return: it spreads risk, protects your family, and locks in advantages your brokerage account cannot provide.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="who">
+      <strong>Prepared by</strong>
+      <div class="role">Area Manager · OVB Allfinanz Romania</div>
+      <div class="role">Client review:</div>
+    </div>
+    <div class="disc">
+      This document is a personalised illustration prepared for Client and is not investment, tax or legal advice. Projected returns of 10% gross are assumptions, not guarantees; investments can fall as well as rise. Fund costs, FGA and ICS guarantee ceilings, and tax treatment are based on publicly available information as of June 2026 and may change. Exact charges and conditions are governed by each fund's KID and the 101 Invest contract documents. Please review the official documentation before deciding.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Data straight from the prepared "Cost vs. tax" calculation (12,000/yr, 10% gross) ----
+// Columns mirror the source sheet exactly:
+//  paid                = total contributions
+//  prod                = SIGNAL 101 Invest value, after product cost
+//  prodGain            = product total gain  (prod - paid)
+//  diyGross            = DIY 0.19% ETF value (pre-tax)
+//  diyGainAfterTax     = DIY gain after 16% capital-gains tax  ("16% kamatadó levonásával")
+//  acc                 = 101 Invest accessible / surrender value
+const DATA = [
+  {y:1,  paid:12000,  prod:12386.16,  diyGross:13177.20, diyGainAfterTax:988.85,   acc:0},
+  {y:2,  paid:24000,  prod:25845.47,  diyGross:27647.08, diyGainAfterTax:3063.55,  acc:0},
+  {y:3,  paid:36000,  prod:40606.30,  diyGross:43536.46, diyGainAfterTax:6330.63,  acc:28700.1},
+  {y:4,  paid:48000,  prod:56860.31,  diyGross:60984.59, diyGainAfterTax:10907.05, acc:44955.4},
+  {y:5,  paid:60000,  prod:74686.08,  diyGross:80144.38, diyGainAfterTax:16921.28, acc:62827.3},
+  {y:6,  paid:72000,  prod:94235.60,  diyGross:101183.74,diyGainAfterTax:24514.34, acc:82476},
+  {y:7,  paid:84000,  prod:115675.55, diyGross:124287.07,diyGainAfterTax:33841.14, acc:104076},
+  {y:8,  paid:96000,  prod:139188.75, diyGross:149656.83,diyGainAfterTax:45071.73, acc:127823},
+  {y:9,  paid:108000, prod:164975.68, diyGross:177515.36,diyGainAfterTax:58392.90, acc:153920},
+  {y:10, paid:120000, prod:193256.21, diyGross:208106.82,diyGainAfterTax:74009.73, acc:182595},
+  {y:11, paid:132000, prod:224271.46, diyGross:241699.30,diyGainAfterTax:92147.41, acc:214100},
+  {y:12, paid:144000, prod:258285.88, diyGross:278587.20,diyGainAfterTax:113053.25,acc:248712},
+  {y:13, paid:156000, prod:295589.50, diyGross:319093.80,diyGainAfterTax:136998.79,acc:286731},
+  {y:14, paid:168000, prod:336500.38, diyGross:363574.10,diyGainAfterTax:164282.25,acc:328491},
+  {y:15, paid:180000, prod:381367.35, diyGross:412417.92,diyGainAfterTax:195231.06,acc:374354},
+  {y:16, paid:192000, prod:430572.94, diyGross:466053.32,diyGainAfterTax:230204.79,acc:424722},
+  {y:17, paid:204000, prod:484536.72, diyGross:524950.35,diyGainAfterTax:269598.30,acc:480031},
+  {y:18, paid:216000, prod:543718.80, diyGross:589625.18,diyGainAfterTax:313845.15,acc:540760},
+  {y:19, paid:228000, prod:608623.78, diyGross:660644.61,diyGainAfterTax:363421.48,acc:607437},
+  {y:20, paid:240000, prod:679805.08, diyGross:738631.05,diyGainAfterTax:418850.08,acc:679805}
+];
+DATA.forEach(d=>{
+  d.prodGain  = d.prod - d.paid;                 // product net gain (after cost)
+  d.diyNetVal = d.paid + d.diyGainAfterTax;       // DIY value once tax is paid on exit
+});
+
+const fmt = n => "€"+Math.round(n).toLocaleString("en-US");
+const fmtk = n => "€"+(Math.round(n/1000)).toLocaleString("en-US")+"k";
+
+// ---- KPIs + slider ----
+const slider = document.getElementById('yrs');
+const yrsval = document.getElementById('yrsval');
+function updateKPIs(y){
+  const d = DATA[y-1];
+  document.getElementById('kpi-paid').textContent  = fmt(d.paid);
+  document.getElementById('kpi-value').textContent = fmt(d.prod);
+  document.getElementById('kpi-gain').textContent  = fmt(d.prod - d.paid);
+  document.getElementById('kpi-acc').textContent   = fmt(d.acc);
+  drawChart(y);
+}
+slider.addEventListener('input', e=>{ yrsval.textContent = e.target.value; updateKPIs(+e.target.value); });
+
+// ---- Chart ----
+const svg = document.getElementById('chart');
+const W=920,H=380,padL=64,padR=24,padT=20,padB=44;
+function drawChart(maxY){
+  const d = DATA.slice(0,maxY);
+  const maxV = Math.max(...d.map(x=>Math.max(x.prod,x.paid,x.acc)));
+  const yMax = Math.ceil(maxV/100000)*100000 || 100000;
+  const x = i => padL + (d.length<=1?0:i*( (W-padL-padR)/(d.length-1) ));
+  const y = v => H-padB - (v/yMax)*(H-padT-padB);
+  let s = "";
+  // grid + y labels
+  for(let g=0; g<=yMax; g+=Math.max(100000,yMax/5)){
+    const yy=y(g);
+    s+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#ECE7DB" stroke-width="1"/>`;
+    s+=`<text x="${padL-10}" y="${yy+4}" text-anchor="end" font-family="Helvetica Neue,Arial" font-size="11" fill="#8A95A3">${fmtk(g)}</text>`;
+  }
+  // x labels (sparse)
+  d.forEach((p,i)=>{
+    if(d.length<=12 || i%2===0 || i===d.length-1){
+      s+=`<text x="${x(i)}" y="${H-padB+18}" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="11" fill="#8A95A3">${p.y}</text>`;
+    }
+  });
+  const area = (key,fill,op)=>{
+    let path=`M ${x(0)} ${y(0)} `;
+    d.forEach((p,i)=> path+=`L ${x(i)} ${y(p[key])} `);
+    path+=`L ${x(d.length-1)} ${y(0)} Z`;
+    return `<path d="${path}" fill="${fill}" opacity="${op}"/>`;
+  };
+  const line = (key,stroke,wd)=>{
+    let path="M ";
+    d.forEach((p,i)=> path+=`${i?'L ':''}${x(i)} ${y(p[key])} `);
+    return `<path d="${path}" fill="none" stroke="${stroke}" stroke-width="${wd}" stroke-linejoin="round"/>`;
+  };
+  // draw: paid area (light), value line, accessible line
+  s+=area('paid','#B9C6D6',.35);
+  s+=line('paid','#B9C6D6',2);
+  s+=line('acc','#1F6F6B',2.2);
+  s+=line('prod','#3E6FA0',3);
+  // end dots
+  const last=d[d.length-1];
+  s+=`<circle cx="${x(d.length-1)}" cy="${y(last.prod)}" r="4.5" fill="#3E6FA0"/>`;
+  s+=`<circle cx="${x(d.length-1)}" cy="${y(last.acc)}" r="4" fill="#1F6F6B"/>`;
+  // axes
+  s+=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H-padB}" stroke="#CFC9BC" stroke-width="1"/>`;
+  s+=`<line x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="#CFC9BC" stroke-width="1"/>`;
+  s+=`<text x="${(W)/2}" y="${H-6}" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="11" fill="#8A95A3">Year</text>`;
+  svg.innerHTML = s;
+}
+
+// ---- Tax table (gain vs gain, exactly as the prepared sheet compares) ----
+const tb = document.getElementById('taxbody');
+DATA.forEach(d=>{
+  // product gain vs DIY gain after 16% tax
+  const delta = d.prodGain - d.diyGainAfterTax; // positive => product ahead
+  const flip = delta >= 0;
+  const tr = document.createElement('tr');
+  if(flip) tr.className='flip';
+  tr.innerHTML = `
+    <td>${d.y}</td>
+    <td>${fmt(d.paid)}</td>
+    <td>${fmt(d.prodGain)}</td>
+    <td>${fmt(d.diyGainAfterTax)}</td>
+    <td class="${flip?'pos':'neg'}">${flip?'+':'−'}${fmt(Math.abs(delta))}</td>`;
+  tb.appendChild(tr);
+});
+
+// init
+updateKPIs(20);
+</script>
+</body>
+</html>
